@@ -1,5 +1,16 @@
 <?php
 $newEmail = $_POST['email'];
-$sql = "UPDATE students SET email='$newEmail'";
-mysqli_query($conn,$sql);
+$id = $_POST['id'];
+
+// ERROR: misssing WHERE clause results to all rows being updated
+// $sql = "UPDATE students SET email='$newEmail'";
+// mysqli_query($conn,$sql);
+
+// CORRECT: add WHERE clause to update specific record
+$sql = "UPDATE students SET email='$newEmail' WHERE id=$id";
+$res = mysqli_query($conn,$sql);
+
+/*
+a WHERE clause is important so that you can update a specific record only
+*/
 ?>
