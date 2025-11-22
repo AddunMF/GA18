@@ -3,4 +3,5 @@ mysqli_connect("localhost","root","","class_db");
 $email = $_POST['emial'];
 // misspelled
 $sql = "SELECT * FROM students WHERE email='$email'";
-$res = mysqli_query($conn, $sql);?>
+$res = mysqli_query($conn, $sql);
+?>
