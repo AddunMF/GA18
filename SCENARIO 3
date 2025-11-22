@@ -1,6 +1,21 @@
-<?php$conn = 
-mysqli_connect("localhost","root","","class_db");
+<?php
+$conn = mysqli_connect("localhost","root","","class_db");
+
+// ERROR: direct user input in SQL is unsafe and triggers SQL injection
+// $age = $_GET['age'];
+// $sql = "SELECT * FROM students WHERE age = $age";
+
+// CORRECT: use prepared statement
 $age = $_GET['age'];
-$sql = "SELECT * FROM students WHERE age = $age";
-$res = mysqli_query($conn, $sql);
+
+$stmt = $conn->prepare("SELECT * FROM students WHERE age = ?");
+$stmt->bind_param("i", $age); // "i" means integer
+$stmt->execute();
+
+$res = $stmt->get_result();
+
+/*
+Use of prepared statement avoid SQL injection
+
+*/
 ?>
