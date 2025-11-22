@@ -1,6 +1,25 @@
 <?php
 $page = $_GET['page'];
 $limit = 5;
+
+//ERROR:no restriction 
+// $offset = $page * $limit;
+// $sql = "SELECT * FROM students LIMIT $offset, $limit";
+
+// CORRECT: add restriction on page number
+$page = (int) $page; // siguraduhin number
+if($page < 0) {
+    $page = 0; // minimum page 0
+} elseif($page > 1000) { // maximum page limit para di ma-crash ang server
+    $page = 1000;
+}
+
 $offset = $page * $limit;
 $sql = "SELECT * FROM students LIMIT $offset, $limit";
+$res = mysqli_query($conn, $sql);
+
+/* no restriction makes the user input large number of page and can result to MySQL crashing.
+add a restriction/validation to limit users input  of page number and avoid crashing of MySQL
+
+*/
 ?>
