@@ -1,5 +1,21 @@
-<?php$conn = 
-mysqli_connect("localhost","root","","class_db");
-$sql = "DELETE FROM students WHERE id = " . $_GET['id'];
-mysqli_query($conn, $sql);
+<?php
+$conn = mysqli_connect("localhost","root","","class_db");
+
+// ERROR: Uses $_GET['id'] directly onquery which is prone to SQL injection
+// $sql = "DELETE FROM students WHERE id = " . $_GET['id'];
+// mysqli_query($conn, $sql);
+
+// CORRECT: option 1 — use intval() to force integer
+$id = intval($_GET['id']);
+
+// CORRECT: option 2 — prepared statement (more secure)
+$stmt = $conn->prepare("DELETE FROM students WHERE id = ?");
+$stmt->bind_param("i", $id);
+$stmt->execute();
+
+/*
+use of intval()to make sure that the id id integer only, 
+use prepared statement to avoid SQL injection
+
+*/
 ?>
