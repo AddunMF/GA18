@@ -1,9 +1,18 @@
-<?php$conn = 
-mysqli_connect("localhost","root","","class_db");
+<?php
+$conn = mysqli_connect("localhost","root","","class_db");
+
+// ERROR: no loop, prints one record only
+// $res = mysqli_query($conn,"SELECT * FROM students");
+// $row = mysqli_fetch_assoc($res);
+// echo $row['email']; // prints first only
+
+// CORRECT: add while loop to display all emails at once
 $res = mysqli_query($conn,"SELECT * FROM students");
+while($row = mysqli_fetch_assoc($res)) {
+    echo $row['email'] . "<br>";
+}
 
-
-$row = mysqli_fetch_assoc($res);
-echo $row['email']; 
-// prints first only
+/*
+added a while loop to display all emails of students in single command
+*/
 ?>
