@@ -1,7 +1,17 @@
-<?php$conn = 
-mysqli_connect("localhost","root","","class_db");
-$email = $_POST['emial'];
-// misspelled
+<?php
+$conn = mysqli_connect("localhost","root","","class_db");
+
+// ERROR: typographical error results to undefined index error
+// $email = $_POST['emial']; 
+
+// CORRECT: double check spellings 
+$email = $_POST['email'];
+
 $sql = "SELECT * FROM students WHERE email='$email'";
 $res = mysqli_query($conn, $sql);
+
+/*
+change the mispelled word to avoid the undefined index error
+
+*/
 ?>
