@@ -1,6 +1,23 @@
-<?php$conn = 
-mysqli_connect("localhost","root","","class_db");
+<?php
+$conn = mysqli_connect("localhost","root","","class_db");
+
+// ERROR: input is missing a quote
+// $fname = $_POST['fname'];
+
+ // CORRECT: correct input
 $fname = $_POST['fname'];
-$sql = "SELECT * FROM students WHERE first_name = $fname";
+
+// ERROR: $fname is missing a qoute thats why it displays "Unknown column"
+// $sql = "SELECT * FROM students WHERE first_name = $fname";
+
+// CORRECT:uses single qoute to make the value string in SQL
+$sql = "SELECT * FROM students WHERE first_name = '$fname'";
+
+/*
+added a qoute on string values.
+if the value is missing a qoute the SQL will assume that the value is a column name not a string,
+it will result to error
+*/
+
 $res = mysqli_query($conn, $sql);
 ?>
