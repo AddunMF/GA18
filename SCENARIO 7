@@ -1,8 +1,30 @@
-<?php$conn =
-mysqli_connect("localhost","root","","class_db");
+<?php
+$conn = mysqli_connect("localhost","root","","class_db");
+
+ // ERROR:missing qoute on $email, prone on SQL error
+// $sql = "UPDATE students SET email=$email WHERE id=$id";
+
+// ERROR: result prints updated even when there are SQL error
+// $res = mysqli_query($conn, $sql);
+// echo "Updated!";
+
 $id = $_POST['id'];
 $email = $_POST['email'];
-$sql = "UPDATE students SET email=$email WHERE id=$id";
-$res = mysqli_query($conn, $sql);
-echo "Updated!";
+
+// CORRECT: add qoutes and used prepared statement for safety
+$stmt = $conn->prepare("UPDATE students SET email=? WHERE id=?");
+$stmt->bind_param("si", $email, $id);
+$success = $stmt->execute();
+
+// CORRECT: create error checking
+if($success) {
+    echo "Updated!";
+} else {
+    echo "Error: " . $stmt->error;
+}
+
+/*
+I used a prepared statement with ? placeholders to ensure email is treated as a string and id as an integer.
+I also added error checking so it shows whether the update succeeded or if there was an SQL error, instead of always printing “Updated!” even on failure.
+*/
 ?>
