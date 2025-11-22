@@ -1,4 +1,14 @@
 <?php
 $id = $_GET['id'];
-$sql = "SELECT * FROM students WHERE id = '$id'";
-// id is int?>
+
+// ERROR:A qoute on a integer is unnecessary
+// $sql = "SELECT * FROM students WHERE id = '$id'";
+
+// CORRECT: remove qoute
+$id = (int) $_GET['id'];
+$sql = "SELECT * FROM students WHERE id = $id";
+
+/*
+remove the qoute on the id because it is a integer and not a string. 
+
+?>
